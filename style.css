@@ -391,23 +391,14 @@ select option {
 
 .share-btn.screenshot {
     width: 100%;
-    margin-bottom: 16px;
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    font-size: 0.9rem;
+    color: #fff;
+    font-size: 1rem;
+    padding: 20px 16px;
 }
 
 .share-btn.screenshot:hover {
     background: linear-gradient(135deg, #7c8ef5 0%, #8a5bb8 100%);
-}
-
-.text-share-buttons {
-    display: flex;
-    gap: 16px;
-}
-
-.share-buttons {
-    display: flex;
-    gap: 16px;
 }
 
 .share-btn {
@@ -431,14 +422,6 @@ select option {
 .share-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-}
-
-.share-btn.x {
-    background: #000000;
-}
-
-.share-btn.line {
-    background: #06C755;
 }
 
 .share-icon {
