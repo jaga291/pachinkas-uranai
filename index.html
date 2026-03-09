@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>今日の運勢占い</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+
+        <div id="inputSection">
+            <!-- メイン画像（h1） -->
+            <h1 class="top-image-container">
+                <img src="images/TOP.png" alt="パチンカス占い - あなたの今日の勝負運を占う" class="top-image">
+            </h1>
+
+            <!-- 入力フォーム -->
+            <div id="inputForm" class="panel">
+                <p class="subtitle">誕生日と血液型で今日の運勢を占います</p>
+            
+            <div class="input-group">
+                <label for="birthdayYear">誕生日</label>
+                <div class="birthday-inputs">
+                    <input type="number" id="birthdayYear" placeholder="2000" min="1900" max="2100" required>
+                    <span class="separator">年</span>
+                    <input type="number" id="birthdayMonth" placeholder="1" min="1" max="12" required>
+                    <span class="separator">月</span>
+                    <input type="number" id="birthdayDay" placeholder="1" min="1" max="31" required>
+                    <span class="separator">日</span>
+                </div>
+            </div>
+            
+            <div class="input-group">
+                <label for="bloodType">血液型</label>
+                <select id="bloodType" required>
+                    <option value="">選択してください</option>
+                    <option value="A">A型</option>
+                    <option value="B">B型</option>
+                    <option value="O">O型</option>
+                    <option value="AB">AB型</option>
+                </select>
+            </div>
+            
+            <button class="btn" id="fortuneBtn" onclick="calculateFortune()">占 う</button>
+            <div id="loadingMessage" class="loading" style="display: none;">
+                <div class="loading-spinner"></div>
+                <div class="loading-text">占い中...</div>
+            </div>
+            <div id="errorMessage" class="error-message" style="display: none;"></div>
+        </div>
+        </div>
+
+        <!-- 結果画面 -->
+        <div id="resultContainer" class="result-container panel">
+            <p class="subtitle" id="resultDate"></p>
+
+            <!-- レーティング画像 -->
+            <div class="fortune-rating">
+                <img id="ratingImage" class="rating-image" src="" alt="">
+            </div>
+
+            <div class="result-item">
+                <h3>総合運</h3>
+                <p id="fortuneMessage"></p>
+            </div>
+
+            <div class="result-item">
+                <h3>ラッキーアイテム</h3>
+                <div class="lucky-item" id="luckyItem"></div>
+            </div>
+
+            <div class="result-item">
+                <h3>ラッキーカラー</h3>
+                <div class="lucky-item" id="luckyColor"></div>
+            </div>
+
+            <div class="result-item">
+                <h3>ラッキーナンバー</h3>
+                <div class="lucky-number" id="luckyNumber"></div>
+            </div>
+
+            <div class="share-section">
+                <div class="share-heading">✨ みんなに見てもらう</div>
+                <div class="share-buttons">
+                    <button class="share-btn x" onclick="shareX()">
+                        <span class="share-icon">𝕏</span> X
+                    </button>
+                    <button class="share-btn line" onclick="shareLine()">
+                        <span class="share-icon">📱</span> LINE
+                    </button>
+                </div>
+            </div>
+
+            <div class="goodbye-message">また明日！✨</div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
