@@ -389,6 +389,22 @@ select option {
     font-weight: 700;
 }
 
+.share-btn.screenshot {
+    width: 100%;
+    margin-bottom: 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-size: 0.9rem;
+}
+
+.share-btn.screenshot:hover {
+    background: linear-gradient(135deg, #7c8ef5 0%, #8a5bb8 100%);
+}
+
+.text-share-buttons {
+    display: flex;
+    gap: 16px;
+}
+
 .share-buttons {
     display: flex;
     gap: 16px;

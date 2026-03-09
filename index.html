@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>今日の運勢占い</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -82,7 +83,14 @@
 
             <div class="share-section">
                 <div class="share-heading">✨ みんなに見てもらう</div>
-                <div class="share-buttons">
+                
+                <!-- 画像シェアボタン -->
+                <button class="share-btn screenshot" onclick="shareScreenshot()">
+                    <span class="share-icon">📸</span> 結果を画像でシェア
+                </button>
+                
+                <!-- テキストシェアボタン -->
+                <div class="text-share-buttons">
                     <button class="share-btn x" onclick="shareX()">
                         <span class="share-icon">𝕏</span> X
                     </button>

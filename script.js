@@ -202,3 +202,74 @@ function shareLine() {
     const url = `https://line.me/R/msg/text/?${encodeURIComponent(text)}`;
     window.open(url, '_blank');
 }
+
+// スクリーンショットを撮影してシェア
+async function shareScreenshot() {
+    try {
+        const resultContainer = document.getElementById('resultContainer');
+        
+        // ボタンテキストを変更
+        const btn = event.target;
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="share-icon">⏳</span> 画像を生成中...';
+        btn.disabled = true;
+        
+        // html2canvasで画像生成
+        const canvas = await html2canvas(resultContainer, {
+            backgroundColor: '#1a0800',
+            scale: 2, // 高解像度
+            logging: false,
+            useCORS: true,
+            allowTaint: true
+        });
+        
+        // Canvasをblobに変換
+        canvas.toBlob(async (blob) => {
+            const file = new File([blob], 'uranai-result.png', { type: 'image/png' });
+            
+            // Web Share API対応チェック（主にスマホ）
+            if (navigator.share && navigator.canShare && navigator.canShare({ files: [file] })) {
+                try {
+                    await navigator.share({
+                        files: [file],
+                        title: '今日の運勢',
+                        text: `今日の運勢は【${window.currentRating}】でした！🌟`
+                    });
+                } catch (err) {
+                    if (err.name !== 'AbortError') {
+                        console.error('Share failed:', err);
+                        downloadImage(canvas);
+                    }
+                }
+            } else {
+                // PC版: 画像をダウンロード
+                downloadImage(canvas);
+            }
+            
+            // ボタンを元に戻す
+            btn.innerHTML = originalText;
+            btn.disabled = false;
+        }, 'image/png');
+        
+    } catch (error) {
+        console.error('Screenshot error:', error);
+        alert('画像の生成に失敗しました。もう一度お試しください。');
+        
+        // ボタンを元に戻す
+        const btn = event.target;
+        btn.innerHTML = '<span class="share-icon">📸</span> 結果を画像でシェア';
+        btn.disabled = false;
+    }
+}
+
+// 画像をダウンロード
+function downloadImage(canvas) {
+    const link = document.createElement('a');
+    const today = new Date();
+    const dateStr = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
+    link.download = `uranai-${dateStr}.png`;
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+    
+    alert('画像を保存しました！\nダウンロードフォルダから画像をSNSに投稿してください。');
+}
