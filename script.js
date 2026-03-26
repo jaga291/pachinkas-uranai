@@ -185,89 +185,83 @@ async function calculateFortune() {
     }
 }
 
-// スクリーンショットを撮影してシェア
+
+// 結果URLをシェア（OGP対応）
 async function shareScreenshot() {
     const btn = document.querySelector('.share-btn.screenshot');
     const originalHTML = btn.innerHTML;
     
     try {
-        btn.innerHTML = '<span class="share-icon">⏳</span> 画像を生成中...';
+        btn.innerHTML = '<span class="share-icon">⏳</span> 準備中...';
         btn.disabled = true;
         
-        const resultContainer = document.getElementById('resultContainer');
+        // レーティングに応じたURLパラメータを生成
+        const ratingMap = {
+            '虹': 'rainbow',
+            '金': 'gold',
+            '銀': 'silver',
+            '赤': 'red',
+            '緑': 'green',
+            '黄': 'yellow',
+            '青': 'blue',
+            '白': 'white'
+        };
         
-        // html2canvasで画像生成（iOSに最適化）
-        const canvas = await html2canvas(resultContainer, {
-            backgroundColor: '#1a0800',
-            scale: 2,
-            logging: false,
-            useCORS: true,
-            allowTaint: false,
-            imageTimeout: 0,
-            removeContainer: false
-        });
+        const rating = window.currentRating || '';
+        const ratingParam = ratingMap[rating] || 'white';
         
-        // Canvasをblobに変換
-        const blob = await new Promise(resolve => {
-            canvas.toBlob(resolve, 'image/png', 1.0);
-        });
-        
-        if (!blob) {
-            throw new Error('画像の生成に失敗しました');
-        }
-        
-        const file = new File([blob], 'uranai-result.png', { type: 'image/png' });
+        // 結果ページのURL（OGP画像付き）
+        const shareUrl = `${window.location.origin}${window.location.pathname}?result=${ratingParam}`;
+        const shareTitle = `今日の運勢は【${rating}運】でした！`;
+        const shareText = `今日の運勢は【${rating}運】でした！🌟\nラッキーアイテム: ${document.getElementById('luckyItem').textContent}\nラッキーナンバー: ${document.getElementById('luckyNumber').textContent}`;
         
         // Web Share API対応チェック
         if (navigator.share) {
             try {
-                // まずファイルなしでシェア可能か確認
-                if (navigator.canShare && navigator.canShare({ files: [file] })) {
-                    await navigator.share({
-                        files: [file],
-                        title: '今日の運勢',
-                        text: `今日の運勢は【${window.currentRating || ''}】でした！🌟`
-                    });
-                } else {
-                    // ファイルシェア非対応の場合、ダウンロード
-                    downloadImageFromBlob(blob);
-                }
+                await navigator.share({
+                    title: shareTitle,
+                    text: shareText,
+                    url: shareUrl
+                });
+                console.log('Share successful');
             } catch (err) {
                 if (err.name === 'AbortError') {
-                    // ユーザーがキャンセル
-                    console.log('Share cancelled');
+                    console.log('Share cancelled by user');
                 } else {
                     console.error('Share error:', err);
-                    downloadImageFromBlob(blob);
+                    // エラー時はURLをコピー
+                    copyToClipboard(shareUrl);
                 }
             }
         } else {
-            // Web Share API非対応（PC等）
-            downloadImageFromBlob(blob);
+            // Web Share API非対応の場合、URLをコピー
+            copyToClipboard(shareUrl);
         }
         
     } catch (error) {
-        console.error('Screenshot error:', error);
-        alert('画像の生成に失敗しました。\n\nエラー: ' + error.message + '\n\nもう一度お試しください。');
+        console.error('Share error:', error);
+        alert('シェアに失敗しました。😢\n\nもう一度お試しください。');
     } finally {
-        // ボタンを元に戻す
         btn.innerHTML = originalHTML;
         btn.disabled = false;
     }
 }
 
-// Blobから画像をダウンロード
-function downloadImageFromBlob(blob) {
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    const today = new Date();
-    const dateStr = `${today.getFullYear()}${String(today.getMonth() + 1).padStart(2, '0')}${String(today.getDate()).padStart(2, '0')}`;
-    link.download = `uranai-${dateStr}.png`;
-    link.href = url;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    
-    alert('画像を保存しました！📸\n\nダウンロードフォルダから画像を\nSNSに投稿してください。');
+// URLをクリップボードにコピー
+function copyToClipboard(text) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert('📋 URLをコピーしました！\n\nSNSに貼り付けてシェアしてください。\n\n画像付きで投稿されます✨');
+        }).catch(err => {
+            console.error('Clipboard error:', err);
+            showUrlPrompt(text);
+        });
+    } else {
+        showUrlPrompt(text);
+    }
+}
+
+// URL表示プロンプト（クリップボード非対応の場合）
+function showUrlPrompt(text) {
+    prompt('URLをコピーしてください:', text);
 }
