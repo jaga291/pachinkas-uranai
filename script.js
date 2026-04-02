@@ -161,6 +161,24 @@ async function calculateFortune() {
         // シェア用にグローバル変数へ保存
         window.currentRating = rating;
         
+        // レーティングに応じたURLパラメータを生成
+        const ratingMap = {
+            '虹': 'rainbow',
+            '金': 'gold',
+            '銀': 'silver',
+            '赤': 'red',
+            '緑': 'green',
+            '黄': 'yellow',
+            '青': 'blue',
+            '白': 'white'
+        };
+        
+        const ratingParam = ratingMap[rating] || 'white';
+        
+        // URLにパラメータを追加（履歴には残さない）
+        const newUrl = `${window.location.pathname}?result=${ratingParam}`;
+        window.history.replaceState({}, '', newUrl);
+        
         const today = new Date();
         document.getElementById('resultDate').textContent = 
             `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日の運勢`;
@@ -195,25 +213,9 @@ async function shareScreenshot() {
         btn.innerHTML = '<span class="share-icon">⏳</span> 準備中...';
         btn.disabled = true;
         
-        // レーティングに応じたURLパラメータを生成
-        const ratingMap = {
-            '虹': 'rainbow',
-            '金': 'gold',
-            '銀': 'silver',
-            '赤': 'red',
-            '緑': 'green',
-            '黄': 'yellow',
-            '青': 'blue',
-            '白': 'white'
-        };
-        
+        // 現在のURL（既にパラメータ付き）を使用
+        const shareUrl = window.location.href;
         const rating = window.currentRating || '';
-        const ratingParam = ratingMap[rating] || 'white';
-        
-        // 結果ページのURL（OGP画像付き）
-        // const shareUrl = `${window.location.origin}${window.location.pathname}?result=${ratingParam}`;
-        // 結果ページのURL（OGP画像付き）
-        const shareUrl = `https://pachin-kas.com/?result=${ratingParam}`;
         const shareTitle = `今日の運勢は【${rating}運】でした！`;
         const shareText = `今日の運勢は【${rating}運】でした！🌟\nラッキーアイテム: ${document.getElementById('luckyItem').textContent}\nラッキーナンバー: ${document.getElementById('luckyNumber').textContent}`;
         
