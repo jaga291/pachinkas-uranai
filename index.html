@@ -43,12 +43,22 @@
             </div>
             
             <button class="btn" id="fortuneBtn" onclick="calculateFortune()">占 う</button>
-            <div id="loadingMessage" class="loading" style="display: none;">
-                <div class="loading-spinner"></div>
-                <div class="loading-text">占い中...</div>
-            </div>
             <div id="errorMessage" class="error-message" style="display: none;"></div>
         </div>
+        </div>
+        
+        <!-- ローディングオーバーレイ -->
+        <div id="loadingMessage" class="loading-overlay" style="display: none;">
+            <div class="loading-content">
+                <div class="fortune-spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="fortune-icon">🔮</div>
+                </div>
+                <div class="loading-text">運命を占い中...</div>
+                <div class="loading-subtext">あなたの今日の運勢は...？</div>
+            </div>
         </div>
 
         <!-- 結果画面 -->

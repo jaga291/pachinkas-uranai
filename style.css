@@ -24,7 +24,8 @@ body {
     font-size: 28px;
     min-height: 100vh;
     padding: 0;
-    margin: 0;
+    margin: 0 auto;
+    max-width: 600px;
     background-color: #1a0800;
     background-image:
         radial-gradient(circle at 20% 30%, #6b1a00 0%, transparent 50%),
@@ -213,39 +214,133 @@ select option {
     transform: none;
 }
 
-/* 占い中アニメーション */
-.loading {
+/* 占い中オーバーレイ */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(26, 8, 0, 0.95);
+    backdrop-filter: blur(10px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.loading-content {
     text-align: center;
-    color: var(--gold);
-    font-size: 0.85rem;
-    margin-top: 20px;
-    letter-spacing: 0.2em;
+}
+
+.fortune-spinner {
     position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 32px;
 }
 
-.loading-spinner {
-    display: inline-block;
-    width: 60px;
-    height: 60px;
-    margin: 20px auto 12px;
-    border: 4px solid rgba(245, 197, 24, 0.2);
-    border-top-color: var(--gold);
+.spinner-ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
+    border: 3px solid transparent;
 }
 
-@keyframes spin {
-    to { transform: rotate(360deg); }
+.spinner-ring:nth-child(1) {
+    width: 150px;
+    height: 150px;
+    border-top-color: var(--gold);
+    border-right-color: var(--gold);
+    animation: spin1 2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+}
+
+.spinner-ring:nth-child(2) {
+    width: 110px;
+    height: 110px;
+    border-bottom-color: #ff6b6b;
+    border-left-color: #ff6b6b;
+    animation: spin2 1.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    animation-delay: 0.3s;
+}
+
+.spinner-ring:nth-child(3) {
+    width: 70px;
+    height: 70px;
+    border-top-color: #4ecdc4;
+    border-right-color: #4ecdc4;
+    animation: spin3 1s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+    animation-delay: 0.6s;
+}
+
+.fortune-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+    animation: float 2s ease-in-out infinite, glow 2s ease-in-out infinite;
+}
+
+@keyframes spin1 {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes spin2 {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(-360deg); }
+}
+
+@keyframes spin3 {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translate(-50%, -50%) translateY(0px); }
+    50% { transform: translate(-50%, -50%) translateY(-10px); }
+}
+
+@keyframes glow {
+    0%, 100% { 
+        filter: drop-shadow(0 0 10px rgba(245, 197, 24, 0.8));
+    }
+    50% { 
+        filter: drop-shadow(0 0 20px rgba(245, 197, 24, 1));
+    }
 }
 
 .loading-text {
+    color: var(--gold);
+    font-size: 1.2rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    margin-bottom: 12px;
     animation: pulse 1.5s ease-in-out infinite;
+}
+
+.loading-subtext {
+    color: rgba(245, 197, 24, 0.7);
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+    animation: pulse 1.5s ease-in-out infinite;
+    animation-delay: 0.3s;
 }
 
 @keyframes pulse {
     0%, 100% { opacity: 1; }
-    50%       { opacity: 0.3; }
+    50% { opacity: 0.4; }
 }
+
 
 .error-message {
     background: rgba(192, 57, 43, 0.2);
