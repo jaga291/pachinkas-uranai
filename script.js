@@ -108,6 +108,11 @@ async function calculateFortune() {
         return;
     }
 
+    // パラメータをクリア（新しい占いの場合）
+    if (window.location.search) {
+        window.history.replaceState({}, '', window.location.pathname);
+    }
+
     // 日付の妥当性チェック
     const birthDate = new Date(year, month - 1, day);
     if (birthDate.getMonth() !== parseInt(month) - 1 || birthDate.getDate() !== parseInt(day)) {
@@ -297,5 +302,9 @@ window.addEventListener('DOMContentLoaded', () => {
         
         // sessionStorageをクリア（再読み込み時に再表示されないように）
         sessionStorage.removeItem('fortuneResult');
+    } else if (resultParam && !sessionStorage.getItem('fortuneResult')) {
+        // パラメータはあるがsessionStorageにデータがない場合（シェアリンクから来た場合）
+        // パラメータをクリアして入力画面を表示
+        window.history.replaceState({}, '', window.location.pathname);
     }
 });
