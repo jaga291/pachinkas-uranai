@@ -47,7 +47,7 @@ body {
     border-radius: 0;
     box-shadow: none;
     /* アスペクト比を確保してレイアウトシフトを防止 */
-    aspect-ratio: 600 / 400;
+    /* aspect-ratio: 600 / 400; */
     object-fit: contain;
     background-color: #1a0800;
 }
@@ -407,7 +407,7 @@ select option {
     display: block;
     animation: imageZoom 1s cubic-bezier(0.22, 1, 0.36, 1);
     /* アスペクト比を確保してレイアウトシフトを防止 */
-    aspect-ratio: 600 / 400;
+    /* aspect-ratio: 600 / 400; */
     object-fit: contain;
     background-color: #1a0800;
 }
