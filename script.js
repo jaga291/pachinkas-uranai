@@ -175,23 +175,23 @@ async function calculateFortune() {
         
         const ratingParam = ratingMap[rating] || 'white';
         
-        // URLにパラメータを追加（履歴には残さない）
-        const newUrl = `${window.location.pathname}?result=${ratingParam}`;
-        window.history.replaceState({}, '', newUrl);
+        // 結果データをsessionStorageに保存（リロード後も使用できるように）
+        const resultData = {
+            rating: rating,
+            ratingIcon: ratingDisplay.icon,
+            ratingClass: ratingDisplay.class,
+            ratingImage: ratingDisplay.img,
+            message: message,
+            item: item,
+            color: color,
+            luckyNumber: luckyNumber,
+            date: `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日の運勢`
+        };
+        sessionStorage.setItem('fortuneResult', JSON.stringify(resultData));
         
-        const today = new Date();
-        document.getElementById('resultDate').textContent = 
-            `${today.getFullYear()}年${today.getMonth() + 1}月${today.getDate()}日の運勢`;
-
-        // アニメーション用に少し遅延してから結果表示
-        setTimeout(() => {
-            // 画面切り替え（TOP画像含むinputSection全体を非表示）
-            document.getElementById('inputSection').style.display = 'none';
-            document.getElementById('resultContainer').classList.add('show');
-            
-            // ページトップにスクロール（instant）
-            window.scrollTo(0, 0);
-        }, 800); // 0.8秒後に結果表示
+        // パラメータ付きURLにリダイレクト（OGPを正しく読み込むため）
+        const newUrl = `${window.location.pathname}?result=${ratingParam}`;
+        window.location.href = newUrl;
         
     } catch (error) {
         console.error('エラー:', error);
@@ -269,3 +269,33 @@ function copyToClipboard(text) {
 function showUrlPrompt(text) {
     prompt('URLをコピーしてください:', text);
 }
+
+// ページ読み込み時：結果データがあれば表示
+window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const resultParam = urlParams.get('result');
+    
+    // 結果パラメータがあり、sessionStorageに結果データがある場合
+    if (resultParam && sessionStorage.getItem('fortuneResult')) {
+        const resultData = JSON.parse(sessionStorage.getItem('fortuneResult'));
+        
+        // 結果を表示
+        document.getElementById('ratingImage').src = resultData.ratingImage;
+        document.getElementById('ratingImage').alt = resultData.rating;
+        document.getElementById('fortuneMessage').textContent = resultData.message;
+        document.getElementById('luckyItem').textContent = resultData.item;
+        document.getElementById('luckyColor').textContent = resultData.color;
+        document.getElementById('luckyNumber').textContent = resultData.luckyNumber;
+        document.getElementById('resultDate').textContent = resultData.date;
+        
+        // グローバル変数に保存
+        window.currentRating = resultData.rating;
+        
+        // 入力画面を非表示、結果画面を表示
+        document.getElementById('inputSection').style.display = 'none';
+        document.getElementById('resultContainer').classList.add('show');
+        
+        // sessionStorageをクリア（再読み込み時に再表示されないように）
+        sessionStorage.removeItem('fortuneResult');
+    }
+});
