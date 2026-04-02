@@ -180,6 +180,9 @@ async function calculateFortune() {
         
         const ratingParam = ratingMap[rating] || 'white';
         
+        // 今日の日付を取得
+        const today = new Date();
+        
         // 結果データをsessionStorageに保存（リロード後も使用できるように）
         const resultData = {
             rating: rating,
