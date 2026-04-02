@@ -5,6 +5,12 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     
+    // 静的ファイル（CSS, JS, 画像など）はそのまま通過
+    if (url.pathname.match(/\.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot)$/)) {
+      const githubUrl = `https://jaga291.github.io/pachinkas-uranai${url.pathname}`;
+      return fetch(githubUrl);
+    }
+    
     // OGP画像のマッピング
     const ratingImages = {
       'rainbow': 'https://jaga291.github.io/pachinkas-uranai/images/rainbow.png',

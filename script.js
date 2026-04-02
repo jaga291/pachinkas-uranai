@@ -211,7 +211,9 @@ async function shareScreenshot() {
         const ratingParam = ratingMap[rating] || 'white';
         
         // 結果ページのURL（OGP画像付き）
-        const shareUrl = `${window.location.origin}${window.location.pathname}?result=${ratingParam}`;
+        // const shareUrl = `${window.location.origin}${window.location.pathname}?result=${ratingParam}`;
+        // 結果ページのURL（OGP画像付き）
+        const shareUrl = `https://pachin-kas.com/?result=${ratingParam}`;
         const shareTitle = `今日の運勢は【${rating}運】でした！`;
         const shareText = `今日の運勢は【${rating}運】でした！🌟\nラッキーアイテム: ${document.getElementById('luckyItem').textContent}\nラッキーナンバー: ${document.getElementById('luckyNumber').textContent}`;
         
