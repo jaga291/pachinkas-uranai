@@ -310,4 +310,65 @@ window.addEventListener('DOMContentLoaded', () => {
         // パラメータをクリアして入力画面を表示
         window.history.replaceState({}, '', window.location.pathname);
     }
+    
+    // 全ての画像を読み込んでからフェードイン表示
+    preloadImages();
 });
+
+// 画像プリロード機能
+function preloadImages() {
+    // body要素を非表示にする
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease-in';
+    
+    // ページ内の全ての画像要素を取得
+    const images = document.querySelectorAll('img');
+    const imageArray = Array.from(images);
+    
+    // 画像が0個の場合はすぐに表示
+    if (imageArray.length === 0) {
+        document.body.style.opacity = '1';
+        return;
+    }
+    
+    let loadedCount = 0;
+    const totalImages = imageArray.length;
+    
+    // 各画像の読み込み完了を監視
+    imageArray.forEach(img => {
+        if (img.complete) {
+            // すでに読み込み済みの場合
+            loadedCount++;
+            checkAllLoaded();
+        } else {
+            // 読み込み完了イベント
+            img.addEventListener('load', () => {
+                loadedCount++;
+                checkAllLoaded();
+            });
+            
+            // エラー時もカウント（エラーでも表示する）
+            img.addEventListener('error', () => {
+                loadedCount++;
+                checkAllLoaded();
+            });
+        }
+    });
+    
+    // 全ての画像が読み込まれたかチェック
+    function checkAllLoaded() {
+        if (loadedCount === totalImages) {
+            // 全ての画像が読み込まれたらフェードイン
+            setTimeout(() => {
+                document.body.style.opacity = '1';
+            }, 100);
+        }
+    }
+    
+    // タイムアウト: 3秒経っても表示されない場合は強制表示
+    setTimeout(() => {
+        if (document.body.style.opacity !== '1') {
+            document.body.style.opacity = '1';
+        }
+    }, 3000);
+}
