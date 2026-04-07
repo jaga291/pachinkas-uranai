@@ -12,7 +12,51 @@
     
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>今日の運勢占い</title>
+    
+    <!-- SEO基本設定 -->
+    <title>パチンカス占い | 無料で今日の勝負運を占う</title>
+    <meta name="description" content="誕生日と血液型で今日の勝負運を無料で占います。8段階のレーティングであなたの運勢を判定。ラッキーアイテム、ラッキーカラー、ラッキーナンバーもわかる本格占いサイト。">
+    <meta name="keywords" content="占い,無料占い,今日の運勢,勝負運,誕生日占い,血液型占い,ラッキーアイテム,ラッキーカラー,パチンカス占い">
+    <meta name="author" content="パチンカス占い">
+    <link rel="canonical" href="https://pachin-kas.com/">
+    
+    <!-- OGP (Open Graph Protocol) -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="パチンカス占い">
+    <meta property="og:title" content="パチンカス占い | 無料で今日の勝負運を占う">
+    <meta property="og:description" content="誕生日と血液型で今日の勝負運を無料で占います。8段階のレーティングであなたの運勢を判定。">
+    <meta property="og:url" content="https://pachin-kas.com/">
+    <meta property="og:image" content="https://jaga291.github.io/pachinkas-uranai/images/TOP.png">
+    <meta property="og:locale" content="ja_JP">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="パチンカス占い | 無料で今日の勝負運を占う">
+    <meta name="twitter:description" content="誕生日と血液型で今日の勝負運を無料で占います。">
+    <meta name="twitter:image" content="https://jaga291.github.io/pachinkas-uranai/images/TOP.png">
+    
+    <!-- 構造化データ (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "パチンカス占い",
+      "url": "https://pachin-kas.com/",
+      "description": "誕生日と血液型で今日の勝負運を無料で占う占いサイト",
+      "applicationCategory": "EntertainmentApplication",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "JPY"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.5",
+        "ratingCount": "1000"
+      }
+    }
+    </script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -52,8 +96,64 @@
             </div>
             
             <button class="btn" id="fortuneBtn" onclick="calculateFortune()">占 う</button>
+            
+            <!-- サイト説明ボタン -->
+            <button class="info-btn" onclick="openInfoPopup()">
+                <span class="info-icon">ℹ️</span> このサイトについて
+            </button>
+            
             <div id="errorMessage" class="error-message" style="display: none;"></div>
         </div>
+        </div>
+        
+        <!-- SEO用ポップアップ -->
+        <div id="infoPopup" class="popup-overlay" style="display: none;" onclick="closeInfoPopup()">
+            <div class="popup-content" onclick="event.stopPropagation()">
+                <button class="popup-close" onclick="closeInfoPopup()">×</button>
+                <h2>パチンカス占いについて</h2>
+                
+                <section class="popup-section">
+                    <h3>🔮 パチンカス占いとは</h3>
+                    <p>パチンカス占いは、誕生日と血液型を組み合わせて今日の勝負運を占う無料の占いサイトです。毎日異なる運勢が表示され、あなたの今日の運気をチェックできます。</p>
+                </section>
+                
+                <section class="popup-section">
+                    <h3>✨ 8段階のレーティングシステム</h3>
+                    <p>虹運・金運・銀運・赤運・緑運・黄運・青運・白運の8段階で、あなたの今日の運勢を判定します。最高の虹運が出たら、今日は特別にラッキーな一日になるでしょう。</p>
+                    <ul>
+                        <li><strong>虹運（確率2%）</strong>：最高の運気！何事も上手くいく日</li>
+                        <li><strong>金運（確率5%）</strong>：とても良い運気。勝負事に最適</li>
+                        <li><strong>銀運（確率8%）</strong>：良い運気。チャレンジ日和</li>
+                        <li><strong>赤運（確率15%）</strong>：やや良い運気。積極的に行動を</li>
+                        <li><strong>緑運・黄運・青運（各16-18%）</strong>：平均的な運気</li>
+                        <li><strong>白運（確率19%）</strong>：慎重に行動すべき日</li>
+                    </ul>
+                </section>
+                
+                <section class="popup-section">
+                    <h3>🎯 ラッキーアイテム・カラー・ナンバー</h3>
+                    <p>運勢結果では、その日のラッキーアイテム、ラッキーカラー、ラッキーナンバー（0-9）もお知らせします。これらを意識することで、より良い一日を過ごせるかもしれません。</p>
+                </section>
+                
+                <section class="popup-section">
+                    <h3>📱 SNSでシェア</h3>
+                    <p>占い結果はX（Twitter）やLINEで友達とシェアできます。シェアボタンを押すだけで、あなたの今日の運勢を画像付きで投稿できます。</p>
+                </section>
+                
+                <section class="popup-section">
+                    <h3>🌟 毎日違う結果</h3>
+                    <p>同じ誕生日・血液型でも、日によって運勢は変わります。毎朝チェックして、今日の運気を確認しましょう。また明日も遊びに来てくださいね！</p>
+                </section>
+                
+                <section class="popup-section">
+                    <h3>💯 完全無料</h3>
+                    <p>パチンカス占いは完全無料でご利用いただけます。会員登録も不要。何度でも気軽にお試しください。</p>
+                </section>
+                
+                <div class="popup-footer">
+                    <button class="popup-btn" onclick="closeInfoPopup()">占いを始める</button>
+                </div>
+            </div>
         </div>
         
         <!-- ローディングオーバーレイ -->

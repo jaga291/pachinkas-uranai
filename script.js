@@ -372,3 +372,14 @@ function preloadImages() {
         }
     }, 3000);
 }
+
+// ポップアップ開閉
+function openInfoPopup() {
+    document.getElementById('infoPopup').style.display = 'flex';
+    document.body.style.overflow = 'hidden'; // スクロール防止
+}
+
+function closeInfoPopup() {
+    document.getElementById('infoPopup').style.display = 'none';
+    document.body.style.overflow = ''; // スクロール復元
+}
