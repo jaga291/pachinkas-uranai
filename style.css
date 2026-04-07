@@ -402,10 +402,6 @@ select option {
     height: auto;
     display: block;
     animation: imageZoom 1s cubic-bezier(0.22, 1, 0.36, 1);
-    /* アスペクト比を確保してレイアウトシフトを防止 */
-    aspect-ratio: 600 / 400;
-    object-fit: contain;
-    background-color: #1a0800;
 }
 
 @keyframes imageZoom {
@@ -587,32 +583,29 @@ select option {
     }
 }
 
-/* サイト説明ボタン */
+/* サイト説明リンク */
 .info-btn {
-    width: 100%;
-    padding: 14px 20px;
+    display: inline-block;
     margin-top: 16px;
-    background: rgba(245, 197, 24, 0.1);
-    border: 2px solid rgba(245, 197, 24, 0.3);
-    border-radius: 12px;
-    color: var(--gold);
+    padding: 8px 0;
+    background: none;
+    border: none;
+    color: rgba(245, 197, 24, 0.8);
     font-family: 'Kaisei Decol', serif;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    transition: color 0.3s;
 }
 
 .info-btn:hover {
-    background: rgba(245, 197, 24, 0.2);
-    border-color: var(--gold);
+    color: var(--gold);
 }
 
 .info-icon {
-    font-size: 1rem;
+    font-size: 0.8rem;
+    margin-right: 4px;
 }
 
 /* ポップアップオーバーレイ */
