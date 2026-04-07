@@ -375,11 +375,20 @@ function preloadImages() {
 
 // ポップアップ開閉
 function openInfoPopup() {
-    document.getElementById('infoPopup').style.display = 'flex';
-    document.body.style.overflow = 'hidden'; // スクロール防止
+    const popup = document.getElementById('infoPopup');
+    popup.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    document.body.style.position = 'fixed'; // iOS対策
+    document.body.style.width = '100%';
+    
+    // ポップアップのスクロール位置をリセット
+    popup.scrollTop = 0;
 }
 
 function closeInfoPopup() {
-    document.getElementById('infoPopup').style.display = 'none';
-    document.body.style.overflow = ''; // スクロール復元
+    const popup = document.getElementById('infoPopup');
+    popup.style.display = 'none';
+    document.body.style.overflow = '';
+    document.body.style.position = ''; // iOS対策解除
+    document.body.style.width = '';
 }

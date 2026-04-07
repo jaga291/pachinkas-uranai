@@ -46,10 +46,6 @@ body {
     display: block;
     border-radius: 0;
     box-shadow: none;
-    /* アスペクト比を確保してレイアウトシフトを防止 */
-    aspect-ratio: 600 / 400;
-    object-fit: contain;
-    background-color: #1a0800;
 }
 
 .panel {
@@ -625,15 +621,15 @@ select option {
     top: 0;
     left: 0;
     width: 100%;
+    height: 100%;
     height: 100vh;
+    height: 100dvh; /* iOS動的ビューポート対応 */
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(8px);
     z-index: 10000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
     overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* iOSスムーズスクロール */
+    padding: 0;
 }
 
 /* ポップアップコンテンツ */
@@ -641,11 +637,12 @@ select option {
     background: linear-gradient(160deg, #2a1200 0%, #1a0800 60%, #2a1200 100%);
     border: 2px solid var(--gold);
     border-radius: 16px;
-    padding: 32px 24px;
+    padding: 32px 24px 120px 24px; /* 下部に余白追加 */
     max-width: 600px;
-    width: 100%;
-    max-height: 90vh;
-    overflow-y: auto;
+    width: calc(100% - 32px);
+    margin: 16px auto;
+    min-height: calc(100vh - 32px);
+    min-height: calc(100dvh - 32px);
     position: relative;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     animation: popupSlideIn 0.3s ease-out;
