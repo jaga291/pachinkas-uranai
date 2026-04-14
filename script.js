@@ -97,11 +97,19 @@ function getRatingDisplay(rating) {
     return displays[rating] || displays['白'];
 }
 
+// 入力値のサニタイズ（XSS対策）
+function sanitizeInput(value) {
+    if (typeof value !== 'string') {
+        value = String(value);
+    }
+    return value.replace(/[<>"'&]/g, '');
+}
+
 async function calculateFortune() {
-    const year = document.getElementById('birthdayYear').value;
-    const month = document.getElementById('birthdayMonth').value;
-    const day = document.getElementById('birthdayDay').value;
-    const bloodType = document.getElementById('bloodType').value;
+    const year = sanitizeInput(document.getElementById('birthdayYear').value);
+    const month = sanitizeInput(document.getElementById('birthdayMonth').value);
+    const day = sanitizeInput(document.getElementById('birthdayDay').value);
+    const bloodType = sanitizeInput(document.getElementById('bloodType').value);
 
     if (!year || !month || !day || !bloodType) {
         alert('誕生日と血液型をすべて入力してください');
@@ -154,17 +162,17 @@ async function calculateFortune() {
         // レーティング表示を取得
         const ratingDisplay = getRatingDisplay(rating);
 
-        // 結果を表示
+        // 結果を表示（サニタイズ適用）
         document.getElementById('ratingImage').src = ratingDisplay.img;
-        document.getElementById('ratingImage').alt = rating;
+        document.getElementById('ratingImage').alt = sanitizeInput(rating);
         
-        document.getElementById('fortuneMessage').textContent = message;
-        document.getElementById('luckyItem').textContent = item;
-        document.getElementById('luckyColor').textContent = color;
+        document.getElementById('fortuneMessage').textContent = sanitizeInput(message);
+        document.getElementById('luckyItem').textContent = sanitizeInput(item);
+        document.getElementById('luckyColor').textContent = sanitizeInput(color);
         document.getElementById('luckyNumber').textContent = luckyNumber;
         
-        // シェア用にグローバル変数へ保存
-        window.currentRating = rating;
+        // シェア用にグローバル変数へ保存（サニタイズ済み）
+        window.currentRating = sanitizeInput(rating);
         
         // レーティングに応じたURLパラメータを生成
         const ratingMap = {
@@ -287,17 +295,17 @@ window.addEventListener('DOMContentLoaded', () => {
     if (resultParam && sessionStorage.getItem('fortuneResult')) {
         const resultData = JSON.parse(sessionStorage.getItem('fortuneResult'));
         
-        // 結果を表示
-        document.getElementById('ratingImage').src = resultData.ratingImage;
-        document.getElementById('ratingImage').alt = resultData.rating;
-        document.getElementById('fortuneMessage').textContent = resultData.message;
-        document.getElementById('luckyItem').textContent = resultData.item;
-        document.getElementById('luckyColor').textContent = resultData.color;
-        document.getElementById('luckyNumber').textContent = resultData.luckyNumber;
-        document.getElementById('resultDate').textContent = resultData.date;
+        // 結果を表示（サニタイズ適用）
+        document.getElementById('ratingImage').src = sanitizeInput(resultData.ratingImage);
+        document.getElementById('ratingImage').alt = sanitizeInput(resultData.rating);
+        document.getElementById('fortuneMessage').textContent = sanitizeInput(resultData.message);
+        document.getElementById('luckyItem').textContent = sanitizeInput(resultData.item);
+        document.getElementById('luckyColor').textContent = sanitizeInput(resultData.color);
+        document.getElementById('luckyNumber').textContent = sanitizeInput(resultData.luckyNumber);
+        document.getElementById('resultDate').textContent = sanitizeInput(resultData.date);
         
-        // グローバル変数に保存
-        window.currentRating = resultData.rating;
+        // グローバル変数に保存（サニタイズ済み）
+        window.currentRating = sanitizeInput(resultData.rating);
         
         // 入力画面を非表示、結果画面を表示
         document.getElementById('inputSection').style.display = 'none';
