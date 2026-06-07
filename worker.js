@@ -13,14 +13,14 @@ export default {
     
     // OGP画像のマッピング
     const ratingImages = {
-      'rainbow': 'https://jaga291.github.io/pachinkas-uranai/images/rainbow.png',
-      'gold': 'https://jaga291.github.io/pachinkas-uranai/images/gold.png',
-      'silver': 'https://jaga291.github.io/pachinkas-uranai/images/silver.png',
-      'red': 'https://jaga291.github.io/pachinkas-uranai/images/red.png',
-      'green': 'https://jaga291.github.io/pachinkas-uranai/images/green.png',
-      'yellow': 'https://jaga291.github.io/pachinkas-uranai/images/yellow.png',
-      'blue': 'https://jaga291.github.io/pachinkas-uranai/images/blue.png',
-      'white': 'https://jaga291.github.io/pachinkas-uranai/images/white.png'
+      'rainbow': 'https://pachin-kas.com/images/rainbow.png',
+      'gold': 'https://pachin-kas.com/images/gold.png',
+      'silver': 'https://pachin-kas.com/images/silver.png',
+      'red': 'https://pachin-kas.com/images/red.png',
+      'green': 'https://pachin-kas.com/images/green.png',
+      'yellow': 'https://pachin-kas.com/images/yellow.png',
+      'blue': 'https://pachin-kas.com/images/blue.png',
+      'white': 'https://pachin-kas.com/images/white.png'
     };
     
     // レーティング名のマッピング（日本語）
@@ -81,14 +81,14 @@ export default {
     <meta property="og:url" content="${request.url}">
     <meta property="og:title" content="パチンカス占い">
     <meta property="og:description" content="あなたの今日の勝負運を占う">
-    <meta property="og:image" content="https://jaga291.github.io/pachinkas-uranai/images/TOP.png">
-    
+    <meta property="og:image" content="https://pachin-kas.com/images/TOP.png">
+
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="${request.url}">
     <meta name="twitter:title" content="パチンカス占い">
     <meta name="twitter:description" content="あなたの今日の勝負運を占う">
-    <meta name="twitter:image" content="https://jaga291.github.io/pachinkas-uranai/images/TOP.png">`;
+    <meta name="twitter:image" content="https://pachin-kas.com/images/TOP.png">`;
       
       html = html.replace('</head>', `${defaultOgpTags}\n</head>`);
     }
