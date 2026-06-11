@@ -527,6 +527,21 @@ select option {
     font-size: 1.3rem;
 }
 
+/* 商品訴求バナー */
+.banner-section {
+    margin: 32px 16px 0 16px;
+    text-align: center;
+}
+
+.banner-img {
+    width: 100%;
+    max-width: 480px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    border-radius: 8px;
+}
+
 .goodbye-message {
     text-align: center;
     margin: 32px 16px 0 16px;
@@ -565,6 +580,7 @@ select option {
 
     .share-section,
     .goodbye-message,
+    .banner-section,
     .result-container .subtitle {
         margin-left: 12px;
         margin-right: 12px;
